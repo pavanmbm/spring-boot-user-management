@@ -1,0 +1,68 @@
+<configuration>
+	
+	<property resource="application.properties" />
+   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder>
+         <pattern>${logging.pattern}</pattern>
+      </encoder>
+   </appender>
+ 
+   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+      <file>${logging.file}</file>
+      <append>true</append>
+      <encoder>
+         <pattern>${logging.pattern}</pattern>
+      </encoder>
+   </appender>
+   
+   <appender name="REQUEST_RESPONSE_LOGGER_AOP" class="ch.qos.logback.core.FileAppender">
+      <file>${logging.request.response.file}</file>
+      <append>true</append>
+      <encoder>
+         <pattern>${logging.pattern}</pattern>
+      </encoder>
+   </appender>
+   
+   <appender name="REQUEST_RESPONSE_LOGGER_INTERCEPTOR" class="ch.qos.logback.core.FileAppender">
+      <file>${logging.request.response.file_interceptor}</file>
+      <append>true</append>
+      <encoder>
+         <pattern>${logging.pattern}</pattern>
+      </encoder>
+   </appender>
+   
+   <!-- <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>d:/dhllogs/mylogs.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      daily rollover
+      <fileNamePattern>d:/dhllogs/mylogs.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy
+          class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+          or whenever the file size reaches 50MB
+        <maxFileSize>50MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+      keep 30 days' worth of history
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <charset>UTF-8</charset>
+      <layout class="ch.qos.logback.classic.html.HTMLLayout">
+        <pattern>%d{HH:mm:ss.SSS}%thread%level%logger%line%msg</pattern>
+      </layout>         
+    </encoder>
+  </appender> 
+  -->
+ <logger name="com.dhl.usermanagement.aspect.LoggerAspect" level="INFO" additivity="false">
+    <appender-ref ref="REQUEST_RESPONSE_LOGGER_AOP"/>
+</logger>
+
+<logger name="com.dhl.usermanagement.interceptor.LoggerInterceptor" level="INFO" additivity="false">
+    <appender-ref ref="REQUEST_RESPONSE_LOGGER_INTERCEPTOR"/>
+</logger>
+ 
+   <root level="info">
+      <appender-ref ref="FILE" />
+      <appender-ref ref="STDOUT" />
+   </root>
+ 
+</configuration>
